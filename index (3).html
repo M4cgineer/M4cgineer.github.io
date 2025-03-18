@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neza's Jewelry Orders</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #d4af37;
+            --secondary-color: #4a4a4a;
+            --accent-color: #ff6f00;
+            --dark-bg: #2a2a2a;
+            --light-bg: #f8f8f8;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: var(--light-bg);
+            margin: 0;
+            padding: 20px;
+            transition: background 0.3s;
+        }
+
+        .dark-mode {
+            background: var(--dark-bg);
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: background 0.3s;
+        }
+
+        .dark-mode .container {
+            background: #333;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 30px;
+            transition: color 0.3s;
+        }
+
+        .dark-mode h1 {
+            color: #ffc107;
+        }
+
+        .jewelry-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: background 0.3s;
+        }
+
+        .dark-mode .jewelry-table {
+            background: #444;
+        }
+
+        .jewelry-table th, .jewelry-table td {
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            text-align: left;
+            transition: border-color 0.3s, color 0.3s;
+        }
+
+        .dark-mode .jewelry-table th, .dark-mode .jewelry-table td {
+            border-color: #555;
+        }
+
+        .jewelry-table th {
+            background: #f2f2f2;
+            color: var(--secondary-color);
+            font-weight: 600;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .dark-mode .jewelry-table th {
+            background: #555;
+            color: white;
+        }
+
+        .jewelry-table tr:nth-child(even) {
+            background: #f9f9f9;
+            transition: background 0.3s;
+        }
+
+        .dark-mode .jewelry-table tr:nth-child(even) {
+            background: #4a4a4a;
+        }
+
+        .total {
+            text-align: right;
+            margin-top: 20px;
+            font-weight: 600;
+            color: var(--secondary-color);
+            transition: color 0.3s;
+        }
+
+        .dark-mode .total {
+            color: white;
+        }
+
+        .payment-info {
+            margin-top: 25px;
+            text-align: center;
+            transition: color 0.3s;
+        }
+
+        .dark-mode .payment-info {
+            color: #ccc;
+        }
+
+        .payment-info p {
+            color: #555;
+            transition: color 0.3s;
+        }
+
+        .dark-mode .payment-info p {
+            color: #ccc;
+        }
+
+        .edit-row {
+            background: #e0f7fa;
+            transition: background 0.3s;
+        }
+
+        .dark-mode .edit-row {
+            background: #607d8b;
+        }
+
+        .edit-input {
+            width: 90%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            transition: border-color 0.3s, background-color 0.3s, color 0.3s;
+        }
+
+        .dark-mode .edit-input {
+            border-color: #777;
+            background-color: #555;
+            color: white;
+        }
+
+        .payment-button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .paid {
+            background: #4caf50;
+            color: white;
+        }
+
+        .pending {
+            background: #ff9800;
+            color: white;
+        }
+
+        .dark-mode .paid{
+            background: #43a047;
+        }
+
+        .dark-mode .pending{
+            background: #f9a825;
+        }
+
+        .add-customer {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        #darkModeToggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        #darkModeToggle.dark-mode{
+            transform: rotate(180deg);
+        }
+
+        .jewelry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .jewelry-header h2 {
+            color: var(--primary-color);
+            font-family: 'Playfair Display', serif;
+            margin: 0;
+            transition: color 0.3s;
+        }
+
+        .dark-mode .jewelry-header h2 {
+            color: #ffc107;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .delete-btn {
+            background: #e53935;
+            color: white;
+        }
+
+        .dark-mode .delete-btn {
+            background: #b71c1c;
+        }
+
+        .save-btn {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .dark-mode .save-btn {
+            background: #ffc107;
+        }
+
+        .add-btn {
+            background: var(--accent-color);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .dark-mode .add-btn {
+            background: #ff6f00;
+        }
+
+        .jewelry-icon {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            opacity: 0.1;
+            transition: opacity 0.3s;
+        }
+
+        .dark-mode .jewelry-icon {
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body id="body">
+    <div class="container" id="container">
+        <div class="jewelry-header">
+            <h2>Neza's Jewelry Orders</h2>
+            <div class="action-buttons">
+                <button class="add-btn">Add Customer</button>
+                <svg id="darkModeToggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width: 30px; height: 30px; cursor: pointer; transition: transform 0.3s;">
+                    <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.54-.1 2.23-.29.28-.15.54-.33.78-.54 3.14-1.92 5.26-5.15 5.26-8.21 0-3.07-2.12-6.3-5.26-8.22-.24-.2-.5-.38-.78-.53C13.54 3.1 12.83 3 12 3zm0 2c4.21 0 7.5 3.29 7.5 7.5 0 2.65-1.67 4.92-4 6.09-1.16.59-2.63.91-4.1.91s-2.84-.32-4.1-.91C6.17 16.42 4.5 14.15 4.5 11.5 4.5 7.29 7.79 4 12 4z"/>
+                </svg>
+            </div>
+        </div>
+        
+        <table class="jewelry-table" id="customerTable">
+            <thead>
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Ordered Products</th>
+                    <th>Balance to Pay</th>
+                    <th>Total</th>
+                    <th>Payment Due Date</th>
+                    <th>Payment Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-id="1">
+                    <td class="name">Maria Santos</td>
+                    <td class="products">Semi-Gold Necklace, Ring</td>
+                    <td class="balance">2500</td>
+                    <td class="total-amount">5000</td>
+                    <td class="due-date">2024-07</td>
+                    <td class="payment-status">Pending</td>
+                    <td class="action">
+                        <button class="payment-button pending">Pending</button>
+                        <button class="delete-btn">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="payment-info">
+            <p>Total Orders: <span id="totalOrders">1</span></p>
+            <p>Total Balance: <span id="totalBalance">2500</span></p>
+        </div>
+    </div>
+
+    <script>
+        let customers = [
+            {
+                id: 1,
+                name: "Maria Santos",
+                products: "Semi-Gold Necklace, Ring",
+                balance: 2500,
+                total: 5000,
+                dueDate: "2024-07",
+                status: "Pending"
+            }
+        ];
+
+        // Dark Mode Toggle
+        const toggleDarkMode = () => {
+            document.body.classList.toggle('dark-mode');
+            document.getElementById('container').classList.toggle('dark-mode');
+            document.getElementById('darkModeToggle').classList.toggle('dark-mode');
+        };
+
+        // Add Customer
+        const addCustomer = () => {
+            const newCustomer = {
+                id: customers.length + 1,
+                name: prompt("Enter customer name"),
+                products: prompt("Enter ordered products"),
+                balance: parseInt(prompt("Enter balance to pay")),
+                total: parseInt(prompt("Enter total amount")),
+                dueDate: prompt("Enter payment due date"),
+                status: "Pending"
+            };
+            customers.push(newCustomer);
+            updateTable();
+        };
+
+        // Edit Customer
+        const editCustomer = (id) => {
+            const customer = customers.find(c => c.id === id);
+            customer.name = prompt("Update name", customer.name);
+            customer.products = prompt("Update products", customer.products);
+            customer.balance = parseInt(prompt("Update balance", customer.balance));
+            customer.total = parseInt(prompt("Update total", customer.total));
+            customer.dueDate = prompt("Update due date", customer.dueDate);
+            updateTable();
+        };
+
+        // Delete Customer
+        const deleteCustomer = (id) => {
+            customers = customers.filter(c => c.id !== id);
+            updateTable();
+        };
+
+        // Update Table
+        const updateTable = () => {
+            const tbody = document.getElementById('customerTable').querySelector('tbody');
+            tbody.innerHTML = customers.map(customer => `
+                <tr data-id="${customer.id}">
+                    <td class="name">${customer.name}</td>
+                    <td class="products">${customer.products}</td>
+                    <td class="balance">${customer.balance}</td>
+                    <td class="total-amount">${customer.total}</td>
+                    <td class="due-date">${customer.dueDate}</td>
+                    <td class="payment-status">${customer.status}</td>
+                    <td class="action">
+                        <button class="payment-button ${customer.status.toLowerCase()}">${customer.status}</button>
+                        <button class="delete-btn" onclick="deleteCustomer(${customer.id})">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+            
+            // Update totals
+            document.getElementById('totalOrders').textContent = customers.length;
+            document.getElementById('totalBalance').textContent = customers.reduce((sum, c) => sum + c.balance, 0);
+        };
+
+        // Initialize
+        document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
+        document.querySelector('.add-btn').addEventListener('click', addCustomer);
+        
+        // Initial update
+        updateTable();
+    </script>
+</body>
+</html>
